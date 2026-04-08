@@ -11,6 +11,7 @@ test('OrangeHRM Login Test', async ({ page }) => {
 
   // Enter password
   await page.locator('input[name="password"]').fill('admin123');
+  //above line is for input name and filling the data
 
   // Click login button
   await page.locator('button[type="submit"]').click();
