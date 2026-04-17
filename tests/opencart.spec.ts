@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('OrangeHRM Logout Test', async ({ page }) => {
 
-  // Login first
+  // Login first of all into the page
   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/auth/login');
 
   await page.locator('input[name="username"]').fill('Admin');
