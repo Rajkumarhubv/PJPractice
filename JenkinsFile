@@ -33,31 +33,5 @@ pipeline {
                 reportName: 'Playwright Report'
             ])
         }
-
-        success {
-            emailext (
-                subject: "✅ Tests Passed",
-                body: """
-                Tests passed successfully.
-
-                Check Jenkins for report.
-                """,
-                to: "dummy1rajendra@gmail.com",
-                attachmentsPattern: 'playwright-report/**'
-            )
-        }
-
-        failure {
-            emailext (
-                subject: "❌ Tests Failed",
-                body: """
-                Tests failed.
-
-                Check attached report.
-                """,
-                to: "dummy1rajendra@gmail.com",
-                attachmentsPattern: 'playwright-report/**'
-            )
-        }
     }
 }
