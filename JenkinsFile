@@ -33,10 +33,10 @@ pipeline {
 
     post {
         always {
-            // Archive full report
+            // Archive report
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
 
-            // Publish HTML report properly
+            // Publish HTML report
             publishHTML(target: [
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
@@ -45,6 +45,38 @@ pipeline {
                 alwaysLinkToLastBuild: true,
                 allowMissing: false
             ])
+        }
+
+        success {
+            emailext (
+                subject: "✅ Jenkins Build SUCCESS - Playwright Tests Passed",
+                body: """
+                <h3>Build Successful ✅</h3>
+                <p>All Playwright tests passed successfully.</p>
+                <p><b>Job:</b> ${env.JOB_NAME}</p>
+                <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                <p><b>Report:</b> <a href="${env.BUILD_URL}Playwright_Report/">Click Here</a></p>
+                """,
+                mimeType: 'text/html',
+                to: "quizbuzz1992@gmail.com",
+                attachmentsPattern: 'playwright-report/**'
+            )
+        }
+
+        failure {
+            emailext (
+                subject: "❌ Jenkins Build FAILED - Playwright Tests",
+                body: """
+                <h3>Build Failed ❌</h3>
+                <p>Some Playwright tests failed.</p>
+                <p><b>Job:</b> ${env.JOB_NAME}</p>
+                <p><b>Build Number:</b> ${env.BUILD_NUMBER}</p>
+                <p><b>Check Console:</b> <a href="${env.BUILD_URL}console">Click Here</a></p>
+                """,
+                mimeType: 'text/html',
+                to: "quizbuzz1992@gmail.com",
+                attachmentsPattern: 'playwright-report/**'
+            )
         }
     }
 }
