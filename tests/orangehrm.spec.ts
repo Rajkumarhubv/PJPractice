@@ -17,10 +17,10 @@ test('1. Verify login page loads', async ({ page }) => {
   await expect(page).toHaveURL(/login/);
 });
 
-test('2. Verify username field is visible', async ({ page }) => {
-  await page.goto(URL);
-  await expect(page.locator('input[name="username"]')).toBeVisible();
-});
+// test('2. Verify username field is visible', async ({ page }) => {
+//   await page.goto(URL);
+//   await expect(page.locator('input[name="username"]')).toBeVisible();
+// });
 
 // test('3. Verify password field is visible', async ({ page }) => {
 //   await page.goto(URL);

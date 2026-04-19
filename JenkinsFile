@@ -18,19 +18,32 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-                bat 'npx playwright test'
+                // Force HTML report generation
+                bat 'npx playwright test --reporter=html'
+            }
+        }
+
+        stage('Verify Report') {
+            steps {
+                // Debug: check if report files exist
+                bat 'dir playwright-report'
             }
         }
     }
 
     post {
         always {
+            // Archive full report
             archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
 
-            publishHTML([
+            // Publish HTML report properly
+            publishHTML(target: [
                 reportDir: 'playwright-report',
                 reportFiles: 'index.html',
-                reportName: 'Playwright Report'
+                reportName: 'Playwright Report',
+                keepAll: true,
+                alwaysLinkToLastBuild: true,
+                allowMissing: false
             ])
         }
     }
