@@ -1,27 +1,17 @@
 pipeline {
     agent any
 
-    triggers {
-        githubPush()   // triggers on push
-    }
-
     stages {
-
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/Rajkumarhubv/PJPractice.git'
             }
         }
 
-        stage('Install Dependencies') {
+        stage('Install') {
             steps {
                 bat 'npm install'
-            }
-        }
-
-        stage('Install Playwright Browsers') {
-            steps {
                 bat 'npx playwright install'
             }
         }
@@ -34,11 +24,40 @@ pipeline {
     }
 
     post {
-        success {
-            echo 'Tests Passed ✅'
+        always {
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
+
+            publishHTML([
+                reportDir: 'playwright-report',
+                reportFiles: 'index.html',
+                reportName: 'Playwright Report'
+            ])
         }
+
+        success {
+            emailext (
+                subject: "✅ Tests Passed",
+                body: """
+                Tests passed successfully.
+
+                Check Jenkins for report.
+                """,
+                to: "yourmail@gmail.com",
+                attachmentsPattern: 'playwright-report/**'
+            )
+        }
+
         failure {
-            echo 'Tests Failed ❌'
+            emailext (
+                subject: "❌ Tests Failed",
+                body: """
+                Tests failed.
+
+                Check attached report.
+                """,
+                to: "yourmail@gmail.com",
+                attachmentsPattern: 'playwright-report/**'
+            )
         }
     }
 }
