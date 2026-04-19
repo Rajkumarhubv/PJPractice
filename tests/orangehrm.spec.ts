@@ -57,6 +57,7 @@ test('7. Invalid password login', async ({ page }) => {
 
 test('8. Empty login submission', async ({ page }) => {
   await page.goto(URL);
+  //commenting
   await page.click('button[type="submit"]');
 
   await expect(page.locator('text=Required').nth(1)).toBeVisible();
