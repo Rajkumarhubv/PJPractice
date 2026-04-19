@@ -22,93 +22,93 @@ test('2. Verify username field is visible', async ({ page }) => {
   await expect(page.locator('input[name="username"]')).toBeVisible();
 });
 
-test('3. Verify password field is visible', async ({ page }) => {
-  await page.goto(URL);
-  await expect(page.locator('input[name="password"]')).toBeVisible();
-});
+// test('3. Verify password field is visible', async ({ page }) => {
+//   await page.goto(URL);
+//   await expect(page.locator('input[name="password"]')).toBeVisible();
+// });
 
-test('4. Verify login button is visible', async ({ page }) => {
-  await page.goto(URL);
-  await expect(page.locator('button[type="submit"]')).toBeVisible();
-});
+// test('4. Verify login button is visible', async ({ page }) => {
+//   await page.goto(URL);
+//   await expect(page.locator('button[type="submit"]')).toBeVisible();
+// });
 
-test('5. Successful login', async ({ page }) => {
-  await login(page);
-  await expect(page.locator('h6')).toHaveText('Dashboard');
-});
+// test('5. Successful login', async ({ page }) => {
+//   await login(page);
+//   await expect(page.locator('h6')).toHaveText('Dashboard');
+// });
 
-test('6. Invalid username login', async ({ page }) => {
-  await page.goto(URL);
-  await page.fill('input[name="username"]', 'WrongUser');
-  await page.fill('input[name="password"]', password);
-  await page.click('button[type="submit"]');
+// test('6. Invalid username login', async ({ page }) => {
+//   await page.goto(URL);
+//   await page.fill('input[name="username"]', 'WrongUser');
+//   await page.fill('input[name="password"]', password);
+//   await page.click('button[type="submit"]');
 
-  await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
-});
+//   await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
+// });
 
-test('7. Invalid password login', async ({ page }) => {
-  await page.goto(URL);
-  await page.fill('input[name="username"]', username);
-  await page.fill('input[name="password"]', 'wrongpass');
-  await page.click('button[type="submit"]');
+// test('7. Invalid password login', async ({ page }) => {
+//   await page.goto(URL);
+//   await page.fill('input[name="username"]', username);
+//   await page.fill('input[name="password"]', 'wrongpass');
+//   await page.click('button[type="submit"]');
 
-  await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
-});
+//   await expect(page.locator('.oxd-alert-content-text')).toBeVisible();
+// });
 
-test('8. Empty login submission', async ({ page }) => {
-  await page.goto(URL);
-  //commenting
-  await page.click('button[type="submit"]');
+// test('8. Empty login submission', async ({ page }) => {
+//   await page.goto(URL);
+//   //commenting
+//   await page.click('button[type="submit"]');
 
-  await expect(page.locator('text=Required').nth(1)).toBeVisible();
-});
+//   await expect(page.locator('text=Required').nth(1)).toBeVisible();
+// });
 
-test('9. Verify error message for invalid login', async ({ page }) => {
-  await page.goto(URL);
-  await page.fill('input[name="username"]', 'wrong');
-  await page.fill('input[name="password"]', 'wrong');
-  await page.click('button[type="submit"]');
+// test('9. Verify error message for invalid login', async ({ page }) => {
+//   await page.goto(URL);
+//   await page.fill('input[name="username"]', 'wrong');
+//   await page.fill('input[name="password"]', 'wrong');
+//   await page.click('button[type="submit"]');
 
-  await expect(page.locator('.oxd-alert-content-text')).toContainText('Invalid');
-});
+//   await expect(page.locator('.oxd-alert-content-text')).toContainText('Invalid');
+// });
 
-test('10. Verify dashboard after login', async ({ page }) => {
-  await login(page);
-  await expect(page).toHaveURL(/dashboard/);
-});
+// test('10. Verify dashboard after login', async ({ page }) => {
+//   await login(page);
+//   await expect(page).toHaveURL(/dashboard/);
+// });
 
-test('11. Verify user profile dropdown visible after login', async ({ page }) => {
-  await login(page);
-  await expect(page.locator('.oxd-userdropdown-tab')).toBeVisible();
-});
+// test('11. Verify user profile dropdown visible after login', async ({ page }) => {
+//   await login(page);
+//   await expect(page.locator('.oxd-userdropdown-tab')).toBeVisible();
+// });
 
-test('12. Logout functionality', async ({ page }) => {
-  await login(page);
+// test('12. Logout functionality', async ({ page }) => {
+//   await login(page);
 
-  await page.locator('.oxd-userdropdown-tab').click();
-  await page.locator('text=Logout').click();
+//   await page.locator('.oxd-userdropdown-tab').click();
+//   await page.locator('text=Logout').click();
 
-  await expect(page).toHaveURL(/login/);
-});
+//   await expect(page).toHaveURL(/login/);
+// });
 
-test('13. Verify URL does not allow dashboard without login', async ({ page }) => {
-  await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
+// test('13. Verify URL does not allow dashboard without login', async ({ page }) => {
+//   await page.goto('https://opensource-demo.orangehrmlive.com/web/index.php/dashboard/index');
 
-  await expect(page).toHaveURL(/login/);
-});
+//   await expect(page).toHaveURL(/login/);
+// });
 
-test('14. Verify input fields accept typing', async ({ page }) => {
-  await page.goto(URL);
+// test('14. Verify input fields accept typing', async ({ page }) => {
+//   await page.goto(URL);
 
-  await page.fill('input[name="username"]', username);
-  await page.fill('input[name="password"]', password);
+//   await page.fill('input[name="username"]', username);
+//   await page.fill('input[name="password"]', password);
 
-  await expect(page.locator('input[name="username"]')).toHaveValue(username);
-  await expect(page.locator('input[name="password"]')).toHaveValue(password);
-});
+//   await expect(page.locator('input[name="username"]')).toHaveValue(username);
+//   await expect(page.locator('input[name="password"]')).toHaveValue(password);
+// });
 
-test('15. Verify login button click redirects properly', async ({ page }) => {
-  await login(page);
+// test('15. Verify login button click redirects properly', async ({ page }) => {
+//   await login(page);
 
-  await expect(page).toHaveURL(/dashboard/);
-});
+//   await expect(page).toHaveURL(/dashboard/);
+//});

@@ -42,7 +42,7 @@ pipeline {
 
                 Check Jenkins for report.
                 """,
-                to: "yourmail@gmail.com",
+                to: "dummy1rajendra@gmail.com",
                 attachmentsPattern: 'playwright-report/**'
             )
         }
@@ -55,7 +55,7 @@ pipeline {
 
                 Check attached report.
                 """,
-                to: "yourmail@gmail.com",
+                to: "dummy1rajendra@gmail.com",
                 attachmentsPattern: 'playwright-report/**'
             )
         }
